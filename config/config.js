@@ -1,5 +1,5 @@
 require("dotenv").config();
 module.exports = {
-  mongoUrl: process.env.Mongo_url,
-  jwtSecret: process.env.Secret_key,
+  Mongo_url: process.env.Mongo_url,
+  Secret_key: process.env.Secret_key,
 };

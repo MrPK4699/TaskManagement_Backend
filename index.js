@@ -3,12 +3,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-const { mongoUrl } = require("./config/config");
+const { Mongo_url } = require("./config/config");
 
 const app = express();
 
 mongoose
-  .connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(Mongo_url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to MongoDB");
   })

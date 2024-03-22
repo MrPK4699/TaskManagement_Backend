@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { jwtSecret } = require("../config/config");
+const { Secret_key } = require("../config/config");
 
 exports.authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -9,7 +9,7 @@ exports.authenticateToken = (req, res, next) => {
     return res.status(403).json({ error: 'Unauthorized - Token not provided' });
   }
 
-  jwt.verify(token, jwtSecret, (err, user) => {
+  jwt.verify(token, Secret_key, (err, user) => {
     if (err) {
       return res.status(403).json({ error: 'Forbidden - Invalid token', msg: err });
     }
