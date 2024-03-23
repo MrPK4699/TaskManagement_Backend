@@ -1,5 +1,5 @@
 // controllers/taskController.js
-const jwt=require("jsonwebtoken")
+const jwt = require("jsonwebtoken")
 const Task = require("../models/Task");
 const User = require("../models/User");
 // const  userEmail=localStorage.getItem('email')
@@ -8,7 +8,7 @@ const User = require("../models/User");
 exports.getAllTasks = async (req, res) => {
   try {
     // const {user_id}= req.body;
-    const tasks = await Task.find();
+    const tasks = await Task.find({ userEmail: req.user.userID }).sort({createdAt:-1});
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -18,14 +18,17 @@ exports.getAllTasks = async (req, res) => {
 // Controller function to create a new task
 exports.createTask = async (req, res) => {
   try {
-    const { title, description, userEmail } = req.body;
+    const { title, description } = req.body;
+    const userEmail = req.user.userID;
+    console.log(userEmail);
+
     // const user= await User.findOne({email})
-    const task = new Task({ title, description ,userEmail});
+    const task = new Task({ title, description , userEmail});
     // console.log(task);
     await task.save();
     res.status(201).json({ message: "Task created successfully", task });
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error",msg:error });
   }
 };
 
@@ -33,10 +36,10 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   try {
     const taskId = req.params.id;
-    const {completed } = req.body;
+    const { title,description,completed } = req.body;
     const updatedTask = await Task.findByIdAndUpdate(
       taskId,
-      {completed },
+      { title,description,completed },
       { new: true }
     );
     if (!updatedTask) {
