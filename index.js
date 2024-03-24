@@ -19,7 +19,7 @@ mongoose
 app.use(express.json());
 // Allow requests from localhost:3000 (your frontend) 
 // app.use(cors({ origin: 'http://localhost:3000' }));
-app.use(cors({ origin: 'https://6600101c95d53d000833f38f--taskmanagermrpk4699.netlify.app/' }));
+app.use(cors({ origin: 'https://6600101c95d53d000833f38f--taskmanagermrpk4699.netlify.app/'|| 'http://localhost:3000' }));
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
